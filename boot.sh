@@ -20,7 +20,7 @@ rm -rf ~/.local/share/omakub
 git clone https://github.com/tarurar/omakub.git ~/.local/share/omakub >/dev/null
 if [[ $OMAKUB_REF != "master" ]]; then
 	cd ~/.local/share/omakub
-	git fetch origin "${OMAKUB_REF:-feature/brave-default-optional-apps}" && git checkout "${OMAKUB_REF:-feature/brave-default-optional-apps}"
+	git fetch origin "${OMAKUB_REF:-master}" && git checkout "${OMAKUB_REF:-master}"
 	cd -
 fi
 
