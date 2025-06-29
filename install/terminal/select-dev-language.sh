@@ -2,7 +2,7 @@
 if [[ -v OMAKUB_FIRST_RUN_LANGUAGES ]]; then
   languages=$OMAKUB_FIRST_RUN_LANGUAGES
 else
-  AVAILABLE_LANGUAGES=("Ruby on Rails" "Node.js" "Go" "PHP" "Python" "Elixir" "Rust" "Java")
+  AVAILABLE_LANGUAGES=("Ruby on Rails" "Node.js" "Go" "PHP" "Python" "Elixir" "Rust" "Java" ".NET")
   languages=$(gum choose "${AVAILABLE_LANGUAGES[@]}" --no-limit --height 10 --header "Select programming languages")
 fi
 
@@ -40,6 +40,20 @@ if [[ -n "$languages" ]]; then
       ;;
     Java)
       mise use --global java@latest
+      ;;
+    .NET)
+      cd /tmp
+      curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --channel LTS
+      export DOTNET_ROOT="$HOME/.dotnet"
+      export PATH="$PATH:$HOME/.dotnet:$HOME/.dotnet/tools"
+      # Add .NET to shell profiles
+      echo 'export DOTNET_ROOT="$HOME/.dotnet"' >> ~/.bashrc
+      echo 'export PATH="$PATH:$HOME/.dotnet:$HOME/.dotnet/tools"' >> ~/.bashrc
+      if [ -f ~/.zshrc ]; then
+          echo 'export DOTNET_ROOT="$HOME/.dotnet"' >> ~/.zshrc
+          echo 'export PATH="$PATH:$HOME/.dotnet:$HOME/.dotnet/tools"' >> ~/.zshrc
+      fi
+      cd -
       ;;
     esac
   done
